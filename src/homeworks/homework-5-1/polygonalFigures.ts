@@ -1,7 +1,7 @@
 import { PolygonalFigures } from './abstractClasses';
 
 class Rectangle extends PolygonalFigures {
-  sides = 4;
+  sides = RECTANGLE_SIDES_COUNT;
 
   constructor(
     color: string,
@@ -25,7 +25,7 @@ class Rectangle extends PolygonalFigures {
 }
 
 class Square extends PolygonalFigures {
-  sides = 4;
+  sides = RECTANGLE_SIDES_COUNT;
 
   constructor(
     color: string,
@@ -48,7 +48,7 @@ class Square extends PolygonalFigures {
 }
 
 class Triangle extends PolygonalFigures {
-  sides = 3;
+  sides = TRIANGLE_SIDES_COUNT;
 
   constructor(
     color: string,
@@ -110,7 +110,7 @@ class Polygon extends PolygonalFigures {
   ) {
     super('Polygon', color);
 
-    if (this.sides < 3) {
+    if (this.sides < POLYGON_MIN_SIDES_COUNT) {
       throw new Error('A polygon must have at least 3 sides.');
     }
   }
