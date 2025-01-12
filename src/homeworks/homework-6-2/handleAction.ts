@@ -14,6 +14,7 @@ const handleUpdateUser = (action: TUpdateUser) => {
   if (action.payload.age) updates.push('age');
   console.log(updates.length > 0 ? `User ${updates.join(' and ')} updated` : 'No updates');
 };
+
 const handleAction = (action: TAction): void => {
   switch (action.type) {
     case 'CREATE_USER':
