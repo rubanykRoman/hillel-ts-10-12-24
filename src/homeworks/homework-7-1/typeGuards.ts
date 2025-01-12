@@ -17,7 +17,7 @@ type TExternalUser = {
 
 type TPossibleUsersTypes = TUser | TGuest | TAdmin | TExternalUser;
 
-const login = (entity: TPossibleUsersTypes) => {
+const login = (entity: TPossibleUsersTypes): void => {
   if ('role' in entity && entity.role === 'admin') {
     console.log('Authenticating with admin rights');
   } else if ('username' in entity) {
