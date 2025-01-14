@@ -12,7 +12,14 @@ const user: TUser = fetchData() as TUser;
 const anotherUser: TUser = <TUser>fetchData();
 
 function isUserAsserts(person: any): asserts person is TUser {
-  if (!('name' in person && 'age' in person)) {
+  if (
+    !(
+      'name' in person &&
+      typeof person.name === 'string' &&
+      'age' in person &&
+      typeof person.age === 'number'
+    )
+  ) {
     throw new Error(`This person is not a user`);
   }
 }
