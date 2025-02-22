@@ -6,6 +6,7 @@ import Command from './interfaces/ICommand';
 class BankAccount implements IBankAccount {
   private _balance: number;
   private _owner: Client;
+  private readonly _currency: string;
 
   public readonly accountNumber = this.generateAccountNumber();
 
@@ -17,23 +18,28 @@ class BankAccount implements IBankAccount {
     return this._owner;
   }
 
+  public get currency(): string {
+    return this._currency;
+  }
+
   public set owner(value: Client) {
     this._owner = value;
   }
 
-  constructor(owner: Client, balance: number) {
+  constructor(owner: Client, balance: number, currency: string) {
     this._balance = balance;
     this._owner = owner;
+    this._currency = currency;
   }
 
   public deposit(amount: number): void {
     this._balance += amount;
-    console.log(`Operation: Deposit. Balance: ${this.balance}`);
+    console.log(`Operation: Deposit. Balance: ${this.balance} ${this.currency}`);
   }
 
   public withdraw(amount: number): void {
     this._balance -= amount;
-    console.log(`Operation: Withdraw. Balance: ${this.balance}`);
+    console.log(`Operation: Withdraw. Balance: ${this.balance} ${this.currency}`);
   }
 
   private generateAccountNumber(): string {
@@ -106,11 +112,11 @@ class Bank implements IBank {
     return Bank.instance;
   }
 
-  public createAccount(owner: Client, balance: number): IBankAccount {
-    const account = new BankAccount(owner, balance);
+  public createAccount(owner: Client, balance: number, currency: string): IBankAccount {
+    const account = new BankAccount(owner, balance, currency);
     this.accounts.push(account);
     owner.addAccount(account);
-    console.log(`Account ${account.accountNumber} created for ${owner.fullName}`);
+    console.log(`Account ${account.accountNumber} (${currency}) created for ${owner.fullName}`);
     return account;
   }
 
@@ -179,8 +185,8 @@ const transactionQueue = new TransactionQueue();
 
 const clientJohn = new Client('John', 'Doe');
 
-const account1 = bank.createAccount(clientJohn, 1000);
-const account2 = bank.createAccount(clientJohn, 500);
+const account1 = bank.createAccount(clientJohn, 1000, 'USD');
+const account2 = bank.createAccount(clientJohn, 500, 'EUR');
 
 console.log("Client's accounts:", clientJohn.getAccounts());
 
@@ -190,14 +196,18 @@ const withdrawCmd = new WithdrawCommand(account2, 50);
 transactionQueue.queueTransaction(depositCmd); // Deposit 200 to account1
 transactionQueue.queueTransaction(withdrawCmd); // Withdraw 50 from account2
 
-console.log('Account1 balance after deposit:', account1.balance);
-console.log('Account2 balance after withdrawal:', account2.balance);
+console.log('Account1 balance after deposit:', account1.balance, account1.currency);
+console.log('Account2 balance after withdrawal:', account2.balance, account2.currency);
 
 transactionQueue.undoLastTransaction();
-console.log('Account2 balance after undoing withdrawal:', account2.balance);
+console.log('Account2 balance after undoing withdrawal:', account2.balance, account2.currency);
 
 transactionQueue.repeatLastTransaction();
-console.log('Account1 balance after repeating last transaction:', account1.balance);
+console.log(
+  'Account1 balance after repeating last transaction:',
+  account1.balance,
+  account1.currency
+);
 
 bank.closeAccount(account1);
 console.log("Client's accounts after closing account1:", clientJohn.getAccounts());
