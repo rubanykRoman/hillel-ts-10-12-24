@@ -8,7 +8,7 @@ class TodoList {
   private todoList: ITodoItem[] = [];
   private currentId: number = 1;
 
-  add(todoItem: Omit<ITodoItem, 'id' | 'createdAt' | 'editAt'>): void {
+  addTodo(todoItem: Omit<ITodoItem, 'id' | 'createdAt' | 'editAt'>): void {
     if (!todoItem?.title?.trim() && !todoItem?.text?.trim()) {
       throw new Error('Title or text are required');
     }
@@ -21,7 +21,7 @@ class TodoList {
     this.todoList.push(newTodo);
   }
 
-  remove({ id, confirmRemoving }: IRemoveTodo): void {
+  removeTodo({ id, confirmRemoving }: IRemoveTodo): void {
     const item = this.getTodoById(id);
     if (!item) return;
 
@@ -31,7 +31,7 @@ class TodoList {
     this.todoList = this.todoList.filter((todoItem) => todoItem.id !== id);
   }
 
-  edit({ id, updatedFields, confirmEdit }: IEditTodo): void {
+  editTodo({ id, updatedFields, confirmEdit }: IEditTodo): void {
     const currentItem = this.getTodoById(id);
     if (!currentItem) return;
 
@@ -52,7 +52,7 @@ class TodoList {
     this.todoList = this.todoList.map((item) => (item.id === id ? updatedItem : item));
   }
 
-  markAsDone(id: number): void {
+  markTodoAsDone(id: number): void {
     const item = this.getTodoById(id);
     if (item) {
       item.status = TODO_STATUSES.DONE;
@@ -84,7 +84,7 @@ class TodoList {
     );
   }
 
-  sortByStatus(targetStatus: TTodoStatuses): ITodoItem[] {
+  sortTodosByStatus(targetStatus: TTodoStatuses): ITodoItem[] {
     return [...this.todoList].sort((a, b) => {
       if (a.status === targetStatus && b.status !== targetStatus) return -1;
       if (a.status !== targetStatus && b.status === targetStatus) return 1;
@@ -92,7 +92,7 @@ class TodoList {
     });
   }
 
-  sortByDateAt(): ITodoItem[] {
+  sortTodosByDateAt(): ITodoItem[] {
     return [...this.todoList].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
   }
 }
@@ -101,21 +101,21 @@ class TodoList {
 
 const todoList = new TodoList();
 
-todoList.add({
+todoList.addTodo({
   title: 'Buy groceries',
   text: 'Milk, bread, eggs',
   status: TODO_STATUSES.IN_PROGRESS,
   type: TODO_TYPES.DEFAULT,
 });
 
-todoList.add({
+todoList.addTodo({
   title: 'Call mom',
   text: '',
   status: TODO_STATUSES.IN_PROGRESS,
   type: TODO_TYPES.NEED_APPROVE,
 });
 
-todoList.add({
+todoList.addTodo({
   title: 'Go for a walk',
   text: 'Evening walk in the park',
   status: TODO_STATUSES.IN_PROGRESS,
@@ -123,7 +123,7 @@ todoList.add({
 });
 
 try {
-  todoList.add({
+  todoList.addTodo({
     title: '   ',
     text: '  ',
     status: TODO_STATUSES.IN_PROGRESS,
@@ -133,22 +133,22 @@ try {
   console.error('Error while adding:', error.message);
 }
 
-todoList.edit({ id: 1, updatedFields: { text: 'Milk, bread, eggs, cheese' } });
-todoList.markAsDone(1);
+todoList.editTodo({ id: 1, updatedFields: { text: 'Milk, bread, eggs, cheese' } });
+todoList.markTodoAsDone(1);
 
 console.log('Todo with id 1:', todoList.getTodoById(1));
 console.log('All todos:', todoList.getTodoList());
 console.log('Progress:', todoList.getProgressInfo());
 console.log("Todos containing 'Buy':", todoList.findTodoByTitleOrText('Buy'));
-console.log('Todos sorted by status (DONE first):', todoList.sortByStatus(TODO_STATUSES.DONE));
+console.log('Todos sorted by status (DONE first):', todoList.sortTodosByStatus(TODO_STATUSES.DONE));
 
 const allTodos = todoList.getTodoList();
 allTodos[0]!.createdAt = new Date('2025-02-20T10:00:00Z');
 allTodos[1]!.createdAt = new Date('2025-02-25T10:00:00Z');
 allTodos[2]!.createdAt = new Date('2025-02-22T10:00:00Z');
-console.log('Todos sorted by creation date:', todoList.sortByDateAt());
+console.log('Todos sorted by creation date:', todoList.sortTodosByDateAt());
 
-todoList.remove({ id: 1 });
+todoList.removeTodo({ id: 1 });
 console.log('All todos after removing id 1:', todoList.getTodoList());
 
 export default TodoList;
