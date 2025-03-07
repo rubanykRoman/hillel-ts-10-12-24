@@ -1,7 +1,7 @@
 import ICalculator from './interfaces/ICalculator';
 import { TActions } from './interfaces/literalTypes';
 
-class Calculator implements ICalculator {
+export class Calculator implements ICalculator {
   add(a: number, b: number): number {
     return a + b;
   }

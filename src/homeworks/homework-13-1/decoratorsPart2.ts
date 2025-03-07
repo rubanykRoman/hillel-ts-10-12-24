@@ -1,12 +1,12 @@
 import { EMAIL_REGEX } from './constants';
 
-function MinLength(minLength: number) {
+export function MinLength(minLength: number) {
   return function <T, V>(originalProperty: undefined, context: ClassFieldDecoratorContext<T, V>) {
     if (context.kind !== 'field') throw new Error('Field-only decorator');
 
     function updatedProperty(this: T, originalValue: V): V {
       if (typeof originalValue === 'string' && originalValue.length < minLength) {
-        throw new Error(`${String(context.name)} can't be less then ${minLength} symbols`);
+        console.log(`${String(context.name)} can't be less than ${minLength} symbols`);
       }
       return originalValue;
     }
@@ -15,13 +15,13 @@ function MinLength(minLength: number) {
   };
 }
 
-function MaxLength(maxLength: number) {
+export function MaxLength(maxLength: number) {
   return function <T, V>(originalProperty: undefined, context: ClassFieldDecoratorContext<T, V>) {
     if (context.kind !== 'field') throw new Error('Field-only decorator');
 
     function updatedProperty(this: T, originalValue: V): V {
       if (typeof originalValue === 'string' && originalValue.length > maxLength) {
-        throw new Error(`${String(context.name)} can't be more then ${maxLength} symbols`);
+        console.log(`${String(context.name)} can't be more than ${maxLength} symbols`);
       }
       return originalValue;
     }
@@ -30,13 +30,13 @@ function MaxLength(maxLength: number) {
   };
 }
 
-function Email() {
+export function Email() {
   return function <T, V>(originalProperty: undefined, context: ClassFieldDecoratorContext<T, V>) {
     if (context.kind !== 'field') throw new Error('Field-only decorator');
 
     function updatedProperty(this: T, originalValue: V): V {
       if (typeof originalValue === 'string' && !EMAIL_REGEX.test(originalValue)) {
-        throw new Error(`${String(context.name)} field must be a valid email address.`);
+        console.log(`${String(context.name)} field must be a valid email address.`);
       }
       return originalValue;
     }

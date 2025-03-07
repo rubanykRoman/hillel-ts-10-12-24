@@ -5,5 +5,5 @@ export default interface IBook {
   title: string;
   genre: string;
   publicationYear: number;
-  author: IAuthor;
+  author?: IAuthor;
 }

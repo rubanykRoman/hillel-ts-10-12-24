@@ -1,8 +1,8 @@
-type TTranslations = {
+export type TTranslations = {
   [languageCode: string]: string | undefined;
 };
 
-const appTranslations: TTranslations = {
+export const appTranslations: TTranslations = {
   en: 'Hello!',
   ua: 'Привіт!',
   de: 'Hallo!',

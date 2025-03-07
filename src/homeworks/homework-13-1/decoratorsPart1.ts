@@ -1,6 +1,6 @@
 import IDeprecatedMethod from './interfaces/IDeprecatedMethod';
 
-function DeprecatedMethod({ reason, alternative }: IDeprecatedMethod) {
+export function DeprecatedMethod({ reason, alternative }: IDeprecatedMethod) {
   return function <T, A extends any[], R>(
     originalMethod: (...args: A) => R,
     context: ClassMethodDecoratorContext<T, (...args: A) => R>

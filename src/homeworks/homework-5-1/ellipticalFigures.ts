@@ -1,6 +1,5 @@
 import { EllipticalFigures } from './abstractClasses';
-
-class Circle extends EllipticalFigures {
+export class Circle extends EllipticalFigures {
   constructor(
     color: string,
     public radius: number
@@ -20,7 +19,7 @@ class Circle extends EllipticalFigures {
   }
 }
 
-class Ellipse extends EllipticalFigures {
+export class Ellipse extends EllipticalFigures {
   constructor(
     color: string,
     public radius: number,

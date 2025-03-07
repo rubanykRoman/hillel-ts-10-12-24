@@ -1,25 +1,25 @@
 import { EMAIL_REGEX, PHONE_REGEX, URL_REGEX } from './constants';
 import IValidateField from './interfaces/IValidateField';
 
-function ValidateField({ minLength, maxLength, pattern }: IValidateField) {
+export function ValidateField({ minLength, maxLength, pattern }: IValidateField) {
   return function <T, V>(originalProperty: undefined, context: ClassFieldDecoratorContext<T, V>) {
     if (context.kind !== 'field') throw new Error('Field-only decorator');
 
     function updatedProperty(this: T, originalValue: V): V {
       if (typeof originalValue !== 'string' && typeof originalValue !== 'number') {
-        throw new Error(`${String(context.name)} must be a string or a number.`);
+        console.log(`${String(context.name)} must be a string or a number.`);
       }
 
       const valueAsString = `${originalValue}`;
 
       if (minLength !== undefined && valueAsString.length < minLength) {
-        throw new Error(`${String(context.name)} can't be less than ${minLength} symbols.`);
+        console.log(`${String(context.name)} can't be less than ${minLength} symbols.`);
       }
       if (maxLength !== undefined && valueAsString.length > maxLength) {
-        throw new Error(`${String(context.name)} can't be more than ${maxLength} symbols.`);
+        console.log(`${String(context.name)} can't be more than ${maxLength} symbols.`);
       }
       if (pattern && !pattern.test(valueAsString)) {
-        throw new Error(`${String(context.name)} does not match the required pattern.`);
+        console.log(`${String(context.name)} does not match the required pattern.`);
       }
 
       return originalValue;
