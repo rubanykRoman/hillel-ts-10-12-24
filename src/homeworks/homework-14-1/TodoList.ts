@@ -4,7 +4,7 @@ import { TODO_STATUSES, TODO_TYPES, TTodoStatuses } from './constants';
 import IEditTodo from './interfaces/IEditTodo';
 import IRemoveTodo from './interfaces/IRemoveTodo';
 
-class TodoList {
+export class TodoList {
   private todoList: ITodoItem[] = [];
   private currentId: number = 1;
 

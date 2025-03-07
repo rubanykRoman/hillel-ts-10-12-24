@@ -1,6 +1,7 @@
 import { PolygonalFigures } from './abstractClasses';
+import { POLYGON_MIN_SIDES_COUNT, RECTANGLE_SIDES_COUNT, TRIANGLE_SIDES_COUNT } from './constants';
 
-class Rectangle extends PolygonalFigures {
+export class Rectangle extends PolygonalFigures {
   sides = RECTANGLE_SIDES_COUNT;
 
   constructor(
@@ -24,7 +25,7 @@ class Rectangle extends PolygonalFigures {
   }
 }
 
-class Square extends PolygonalFigures {
+export class Square extends PolygonalFigures {
   sides = RECTANGLE_SIDES_COUNT;
 
   constructor(
@@ -47,7 +48,7 @@ class Square extends PolygonalFigures {
   }
 }
 
-class Triangle extends PolygonalFigures {
+export class Triangle extends PolygonalFigures {
   sides = TRIANGLE_SIDES_COUNT;
 
   constructor(
@@ -102,7 +103,7 @@ class Triangle extends PolygonalFigures {
   }
 }
 
-class Polygon extends PolygonalFigures {
+export class Polygon extends PolygonalFigures {
   constructor(
     color: string,
     public sides: number,

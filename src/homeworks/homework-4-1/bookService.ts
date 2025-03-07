@@ -2,7 +2,7 @@ import IAuthor from './interfaces/IAuthor';
 import IBook from './interfaces/IBook';
 import IBookService from './interfaces/IBookService';
 
-class BookService implements IBookService {
+export class BookService implements IBookService {
   private authors: IAuthor[] = [
     { id: 1, name: 'J.K. Rowling' },
     { id: 2, name: 'George Orwell' },
@@ -105,9 +105,9 @@ class BookService implements IBookService {
   getBooksByAuthor(authorSearchField: number | string): IBook[] {
     let filteredBooks: IBook[];
     if (typeof authorSearchField === 'number') {
-      filteredBooks = this.books.filter((b) => b.author.id === authorSearchField);
+      filteredBooks = this.books.filter((b) => b?.author?.id === authorSearchField);
     } else {
-      filteredBooks = this.books.filter((b) => b.author.name.includes(authorSearchField));
+      filteredBooks = this.books.filter((b) => b?.author?.name.includes(authorSearchField));
     }
 
     if (filteredBooks.length === 0) {
@@ -117,12 +117,12 @@ class BookService implements IBookService {
     return filteredBooks;
   }
 
-  getAuthorByBookId(bookId: number): IAuthor {
+  getAuthorByBookId(bookId: number): IAuthor | undefined {
     const book = this.books.find((b) => b.id === bookId);
     if (!book) {
       throw new Error('Book not found for the given ID');
     }
-    return book.author;
+    return book?.author;
   }
 
   search(search: string | number): IBook[] {
@@ -130,14 +130,15 @@ class BookService implements IBookService {
 
     if (typeof search === 'number') {
       filteredBooks = this.books.filter(
-        (book) => book.publicationYear === search || book.id === search || book.author.id === search
+        (book) =>
+          book.publicationYear === search || book.id === search || book?.author?.id === search
       );
     } else {
       filteredBooks = this.books.filter(
         (book) =>
           book.title.toLowerCase().includes(search.toLowerCase()) ||
           book.genre.toLowerCase().includes(search.toLowerCase()) ||
-          book.author.name.toLowerCase().includes(search.toLowerCase())
+          book?.author?.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 

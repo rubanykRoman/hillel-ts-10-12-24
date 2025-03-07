@@ -3,7 +3,7 @@ import { TransactionType } from './types';
 import IBank from './interfaces/IBank';
 import Command from './interfaces/ICommand';
 
-class BankAccount implements IBankAccount {
+export class BankAccount implements IBankAccount {
   private _balance: number;
   private _owner: Client;
   private readonly _currency: string;
@@ -119,7 +119,7 @@ class TransactionHistory {
   }
 }
 
-class Bank implements IBank {
+export class Bank implements IBank {
   private static instance: Bank;
   private accounts: IBankAccount[] = [];
 
@@ -147,7 +147,7 @@ class Bank implements IBank {
   }
 }
 
-class DepositCommand implements Command {
+export class DepositCommand implements Command {
   constructor(
     private account: IBankAccount,
     private amount: number
@@ -160,7 +160,7 @@ class DepositCommand implements Command {
   }
 }
 
-class WithdrawCommand implements Command {
+export class WithdrawCommand implements Command {
   constructor(
     private account: IBankAccount,
     private amount: number
@@ -173,7 +173,7 @@ class WithdrawCommand implements Command {
   }
 }
 
-class TransactionQueue {
+export class TransactionQueue {
   private queue: Command[] = [];
 
   public queueTransaction(command: Command): void {

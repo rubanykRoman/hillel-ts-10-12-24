@@ -7,6 +7,6 @@ export default interface IBookService {
   getAuthors: () => IAuthor[];
   getAuthorById: (authorId: number) => IAuthor;
   getBooksByAuthor: (authorSearchField: number | string) => IBook[];
-  getAuthorByBookId: (bookId: number) => IAuthor;
+  getAuthorByBookId: (bookId: number) => IAuthor | undefined;
   search: (search: string | number) => IBook[];
 }
